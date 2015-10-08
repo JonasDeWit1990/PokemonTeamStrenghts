@@ -1,0 +1,9 @@
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\bin\Release\Pokemon weakness.exe.config
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\bin\Release\Pokemon weakness.exe
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\bin\Release\Pokemon weakness.pdb
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\obj\Release\Pokemon weakness.csprojResolveAssemblyReference.cache
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\obj\Release\Pokemon_weakness.Form1.resources
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\obj\Release\Pokemon_weakness.Properties.Resources.resources
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\obj\Release\Pokemon weakness.csproj.GenerateResource.Cache
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\obj\Release\Pokemon weakness.exe
+C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\obj\Release\Pokemon weakness.pdb
