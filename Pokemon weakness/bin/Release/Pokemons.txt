@@ -1,21 +1,27 @@
 ﻿001	Bulbasaur	Grass	Poison
 002	Ivysaur	Grass	Poison
 003	Venusaur	Grass	Poison
+003	Venusaur-M	Grass	Poison
 004	Charmander	Fire
 005	Charmeleon	Fire
 006	Charizard	Fire	Flying
+006	Charizard-X	Fire	Dragon
+006	Charizard-Y	Fire	Flying
 007	Squirtle	Water
 008	Wartortle	Water
 009	Blastoise	Water
+009	Blastoise-M	Water
 010	Caterpie	Bug
 011	Metapod	Bug
 012	Butterfree	Bug	Flying
 013	Weedle	Bug	Poison
 014	Kakuna	Bug	Poison
 015	Beedrill	Bug	Poison
+015	Beedrill-M	Bug	Poison
 016	Pidgey	Normal	Flying
 017	Pidgeotto	Normal	Flying
 018	Pidgeot	Normal	Flying
+018	Pidgeot-M	Normal	Flying
 019	Rattata	Normal
 020	Raticate	Normal
 021	Spearow	Normal	Flying
@@ -63,6 +69,7 @@
 063	Abra	Psychic
 064	Kadabra	Psychic
 065	Alakazam	Psychic
+065	Alakazam-M	Psychic
 066	Machop	Fighting
 067	Machoke	Fighting
 068	Machamp	Fighting
@@ -78,6 +85,7 @@
 078	Rapidash	Fire
 079	Slowpoke	Water	Psychic
 080	Slowbro	Water	Psychic
+080	Slowbro-M	Water	Psychic
 081	Magnemite	Electric	Steel
 082	Magneton	Electric	Steel
 083	Farfetch'd	Normal	Flying
@@ -92,6 +100,7 @@
 092	Gastly	Ghost	Poison
 093	Haunter	Ghost	Poison
 094	Gengar	Ghost	Poison
+094	Gengar-M	Ghost	Poison
 095	Onix	Rock	Ground
 096	Drowzee	Psychic
 097	Hypno	Psychic
@@ -113,6 +122,7 @@
 113	Chansey	Normal
 114	Tangela	Grass
 115	Kangaskhan	Normal
+115	Kangaskhan-M	Normal
 116	Horsea	Water
 117	Seadra	Water
 118	Goldeen	Water
@@ -120,7 +130,8 @@
 120	Staryu	Water
 121	Starmie	Water	Psychic
 122	Mr. Mime	Psychic	Fairy
-123	Scyther	Bug	Flying
+123	Scyther	Bug
+123	Scyther-M	Bug	Flying
 124	Jynx	Ice	Psychic
 125	Electabuzz	Electric
 126	Magmar	Fire
@@ -128,6 +139,7 @@
 128	Tauros	Normal
 129	Magikarp	Water
 130	Gyarados	Water	Flying
+130	Gyarados-M	Water	Dark
 131	Lapras	Water	Ice
 132	Ditto	Normal
 133	Eevee	Normal
@@ -140,6 +152,7 @@
 140	Kabuto	Rock	Water
 141	Kabutops	Rock	Water
 142	Aerodactyl	Rock	Flying
+142	Aerodactyl-M	Rock	Flying
 143	Snorlax	Normal
 144	Articuno	Ice	Flying
 145	Zapdos	Electric	Flying
@@ -148,6 +161,8 @@
 148	Dragonair	Dragon
 149	Dragonite	Dragon	Flying
 150	Mewtwo	Psychic
+150	Mewtwo-X	Psychic	Fighting
+150	Mewtwo-Y	Psychic
 151	Mew	Psychic
 152	Chikorita	Grass
 153	Bayleef	Grass
@@ -179,6 +194,7 @@
 179	Mareep	Electric
 180	Flaaffy	Electric
 181	Ampharos	Electric
+181	Ampharos-M	Electric	Dragon
 182	Bellossom	Grass
 183	Marill	Water	Fairy
 184	Azumarill	Water	Fairy
@@ -206,12 +222,15 @@
 206	Dunsparce	Normal
 207	Gligar	Ground	Flying
 208	Steelix	Steel	Ground
+208	Steelix-M	Steel	Ground
 209	Snubbull	Fairy
 210	Granbull	Fairy
 211	Qwilfish	Water	Poison
 212	Scizor	Bug	Steel
+212	Scizor-M	Bug	Steel
 213	Shuckle	Bug	Rock
 214	Heracross	Bug	Fighting
+214	Heracross-M	Bug	Fighting
 215	Sneasel	Dark	Ice
 216	Teddiursa	Normal
 217	Ursaring	Normal
@@ -227,6 +246,7 @@
 227	Skarmory	Steel	Flying
 228	Houndour	Dark	Fire
 229	Houndoom	Dark	Fire
+229	Houndoom-M	Dark	Fire
 230	Kingdra	Water	Dragon
 231	Phanpy	Ground
 232	Donphan	Ground
@@ -246,18 +266,22 @@
 246	Larvitar	Rock	Ground
 247	Pupitar	Rock	Ground
 248	Tyranitar	Rock	Dark
+248	Tyranitar-M	Rock	Dark
 249	Lugia	Psychic	Flying
 250	Ho-Oh	Fire	Flying
 251	Celebi	Psychic	Grass
 252	Treecko	Grass
 253	Grovyle	Grass
 254	Sceptile	Grass
+255	Sceptile-M	Grass	Dragon
 255	Torchic	Fire
 256	Combusken	Fire	Fighting
 257	Blaziken	Fire	Fighting
+257	Blaziken-M	Fire	Fighting
 258	Mudkip	Water
 259	Marshtomp	Water	Ground
 260	Swampert	Water	Ground
+260	Swampert-M	Water	Ground
 261	Poochyena	Dark
 262	Mightyena	Dark
 263	Zigzagoon	Normal
@@ -280,6 +304,7 @@
 280	Ralts	Psychic	Fairy
 281	Kirlia	Psychic	Fairy
 282	Gardevoir	Psychic	Fairy
+282	Gardevoir-M	Psychic	Fairy
 283	Surskit	Bug	Water
 284	Masquerain	Bug	Flying
 285	Shroomish	Grass
@@ -300,14 +325,19 @@
 300	Skitty	Normal
 301	Delcatty	Normal
 302	Sableye	Dark	Ghost
+302	Sableye-M	Dark	Ghost
+303	Mawile	Steel	Fairy
 303	Mawile	Steel	Fairy
 304	Aron	Steel	Rock
 305	Lairon	Steel	Rock
 306	Aggron	Steel	Rock
+306	Aggron-M	Steel
 307	Meditite	Fighting	Psychic
+308	Medicham	Fighting	Psychic
 308	Medicham	Fighting	Psychic
 309	Electrike	Electric
 310	Manectric	Electric
+310	Manectric-M	Electric
 311	Plusle	Electric
 312	Minun	Electric
 313	Volbeat	Bug
@@ -317,10 +347,12 @@
 317	Swalot	Poison
 318	Carvanha	Water	Dark
 319	Sharpedo	Water	Dark
+319	Sharpedo-M	Water	Dark
 320	Wailmer	Water
 321	Wailord	Water
 322	Numel	Fire	Ground
 323	Camerupt	Fire	Ground
+323	Camerupt-M	Fire	Ground
 324	Torkoal	Fire
 325	Spoink	Psychic
 326	Grumpig	Psychic
@@ -332,6 +364,7 @@
 332	Cacturne	Grass	Dark
 333	Swablu	Normal	Flying
 334	Altaria	Dragon	Flying
+334	Altaria-M	Dragon	Fairy
 335	Zangoose	Normal
 336	Seviper	Poison
 337	Lunatone	Rock	Psychic
@@ -355,14 +388,17 @@
 352	Kecleon	Normal
 353	Shuppet	Ghost
 354	Banette	Ghost
+355	Banette-M	Ghost
 355	Duskull	Ghost
 356	Dusclops	Ghost
 357	Tropius	Grass	Flying
 358	Chimecho	Psychic
 359	Absol	Dark
+359	Absol-M	Dark
 360	Wynaut	Psychic
 361	Snorunt	Ice
 362	Glalie	Ice
+362	Glalie-M	Ice
 363	Spheal	Ice	Water
 364	Sealeo	Ice	Water
 365	Walrein	Ice	Water
@@ -374,17 +410,22 @@
 371	Bagon	Dragon
 372	Shelgon	Dragon
 373	Salamence	Dragon	Flying
+373	Salamence-M	Dragon	Flying
 374	Beldum	Steel	Psychic
 375	Metang	Steel	Psychic
 376	Metagross	Steel	Psychic
+376	Metagross-M	Steel	Psychic
 377	Regirock	Rock
 378	Regice	Ice
 379	Registeel	Steel
 380	Latias	Dragon	Psychic
+380	Latias-M	Dragon	Psychic
 381	Latios	Dragon	Psychic
+381	Latios-M	Dragon	Psychic
 382	Kyogre	Water
 383	Groudon	Ground
 384	Rayquaza	Dragon	Flying
+384	Rayquaza-M	Dragon	Flying
 385	Jirachi	Steel	Psychic
 386	Deoxys	Psychic	
 387	Turtwig	Grass
@@ -431,6 +472,7 @@
 426	Drifblim	Ghost	Flying
 427	Buneary	Normal
 428	Lopunny	Normal
+428	Lopunny-M	Normal	Fighting
 429	Mismagius	Ghost
 430	Honchkrow	Dark	Flying
 431	Glameow	Normal
@@ -448,9 +490,11 @@
 443	Gible	Dragon	Ground
 444	Gabite	Dragon	Ground
 445	Garchomp	Dragon	Ground
+445	Garchomp-M	Dragon	Ground
 446	Munchlax	Normal
 447	Riolu	Fighting
 448	Lucario	Fighting	Steel
+448	Lucario-M	Fighting	Steel
 449	Hippopotas	Ground
 450	Hippowdon	Ground
 451	Skorupi	Poison	Bug
@@ -463,6 +507,7 @@
 458	Mantyke	Water	Flying
 459	Snover	Grass	Ice
 460	Abomasnow	Grass	Ice
+460	Abomasnow-M	Grass	Ice
 461	Weavile	Dark	Ice
 462	Magnezone	Electric	Steel
 463	Lickilicky	Normal
@@ -478,6 +523,7 @@
 473	Mamoswine	Ice	Ground
 474	Porygon-Z	Normal
 475	Gallade	Psychic	Fighting
+475	Gallade-M	Psychic	Fighting
 476	Probopass	Rock	Steel
 477	Dusknoir	Ghost
 478	Froslass	Ice	Ghost
@@ -540,6 +586,7 @@
 529	Drilbur	Ground
 530	Excadrill	Ground	Steel
 531	Audino	Normal
+531	Audino-M	Normal	Fairy
 532	Timburr	Fighting
 533	Gurdurr	Fighting
 534	Conkeldurr	Fighting
@@ -730,5 +777,6 @@
 717	Yveltal	Dark	Flying
 718	Zygarde	Dragon	Ground
 719	Diancie	Rock	Fairy
+719	Diancie-M	Rock	Fairy
 720	Hoopa	Psychic	Ghost
 720	Hoopa	Psychic	

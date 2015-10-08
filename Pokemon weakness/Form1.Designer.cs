@@ -1247,8 +1247,8 @@
             this.ClientSize = new System.Drawing.Size(1003, 591);
             this.Controls.Add(this.PokemonStrenght_btn);
             this.Controls.Add(this.PokemonWeakness_btn);
-            this.Controls.Add(this.PokemonStrenght_pnl);
             this.Controls.Add(this.PokemonWeakness_pnl);
+            this.Controls.Add(this.PokemonStrenght_pnl);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Pokemon weakness calc";
