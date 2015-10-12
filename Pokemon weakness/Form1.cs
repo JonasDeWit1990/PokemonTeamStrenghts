@@ -16,37 +16,35 @@ using System.IO;
 
 namespace Pokemon_weakness
 {
-    
+    /// <summary>
+    /// Converts an integer to a pokemon type and vice versa
+    /// using (int) and (PokeTypeSelection)
+    /// </summary>
+    enum PokeTypeSelection
+    {
+        None = -1, // used for 2nd type
+        Normal = 0,
+        Fire = 1,
+        Water = 2,
+        Electric = 3,
+        Grass = 4,
+        Ice = 5,
+        Fighting = 6,
+        Poison = 7,
+        Ground = 8,
+        Flying = 9,
+        Psychic = 10,
+        Bug = 11,
+        Rock = 12,
+        Ghost = 13,
+        Dragon = 14,
+        Dark = 15,
+        Steel = 16,
+        Fairy = 17,
+    }
 
     public partial class Form1 : Form
     {
-        /// <summary>
-        /// Converts an integer to a pokemon type and vice versa
-        /// using (int) and (PokeTypeSelection)
-        /// </summary>
-        enum PokeTypeSelection
-        {
-            None = -1, // used for 2nd type
-            Normal = 0,
-            Fire = 1,
-            Water = 2,
-            Electric = 3,
-            Grass = 4,
-            Ice = 5,
-            Fighting = 6,
-            Poison = 7,
-            Ground = 8,
-            Flying = 9,
-            Psychic = 10,
-            Bug = 11,
-            Rock = 12,
-            Ghost = 13,
-            Dragon = 14,
-            Dark = 15,
-            Steel = 16,
-            Fairy = 17,
-        }
-
         // initialise all pokemon types
         PokemonType Normal = new PokemonType();
         PokemonType Fire = new PokemonType();
@@ -84,7 +82,7 @@ namespace Pokemon_weakness
         string[] Pokemon6Weak = { "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
 
         //List used to populate the comboboxes
-        PokemonCreature PokemonList = new PokemonCreature();
+        List<PokemonBase> PokemonList = new List<PokemonBase>();
 
         public Form1()
         {
@@ -242,7 +240,8 @@ namespace Pokemon_weakness
         private void SetPokemonNamesinClass()
         {
             // Debug string: @"C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\AllPokemon.txt"
-            string Filename = @"Pokemons.txt";
+            //string Filename = @"Pokemons.txt";
+            string Filename = @"Pokemons.tsv";
            
             if (File.Exists(Filename))
             {
@@ -250,22 +249,19 @@ namespace Pokemon_weakness
 
                 foreach (string Line in Lines)
                 {
+                    
                     string[] Splitter = Line.Split('\t');
 
-                    if (Splitter.Count() == 3)
-                    {
-                        PokeTypeSelection FoundType;
-                        Enum.TryParse(Splitter[2],out FoundType);
-                        PokemonList.AddPokemon(Convert.ToInt16(Splitter[0]), Splitter[1], (int)FoundType, (int)-1);
-                    }
-                    else
-                    {
-                        PokeTypeSelection FoundType;
-                        Enum.TryParse(Splitter[2], out FoundType);
-                        PokeTypeSelection FoundType2;
+                    PokeTypeSelection FoundType, FoundType2;
+                    Enum.TryParse(Splitter[2], out FoundType);
+
+                    if (Splitter[3] != "")
                         Enum.TryParse(Splitter[3], out FoundType2);
-                        PokemonList.AddPokemon(Convert.ToInt16(Splitter[0]), Splitter[1], (int)FoundType, (int)FoundType2);
-                    }
+                    else
+                        FoundType2 = (PokeTypeSelection)(-1);
+
+                    PokemonList.Add(new PokemonBase(Convert.ToInt16(Splitter[0]), Splitter[1], FoundType, FoundType2,Splitter[4],Splitter[5],Splitter[6]));
+                    
                     
                 }
 
@@ -994,13 +990,16 @@ namespace Pokemon_weakness
             //Pokemon1[1] = new PokemonType();
             var Autocomplete = new AutoCompleteStringCollection();
 
-            PokemonList_combo.Items.AddRange(PokemonList.GetNames().ToArray());
-            P2List_Combo.Items.AddRange(PokemonList.GetNames().ToArray());
-            P3List_Combo.Items.AddRange(PokemonList.GetNames().ToArray());
-            P4List_Combo.Items.AddRange(PokemonList.GetNames().ToArray());
-            P5List_Combo.Items.AddRange(PokemonList.GetNames().ToArray());
-            P6List_Combo.Items.AddRange(PokemonList.GetNames().ToArray());
-            Autocomplete.AddRange(PokemonList.GetNames().ToArray());
+            foreach (PokemonBase Pokemon in PokemonList)
+            {
+                PokemonList_combo.Items.Add(Pokemon.GetName());
+                P2List_Combo.Items.Add(Pokemon.GetName());
+                P3List_Combo.Items.Add(Pokemon.GetName());
+                P4List_Combo.Items.Add(Pokemon.GetName());
+                P5List_Combo.Items.Add(Pokemon.GetName());
+                P6List_Combo.Items.Add(Pokemon.GetName());
+                Autocomplete.Add(Pokemon.GetName());
+            }
 
             PokemonList_combo.AutoCompleteCustomSource = Autocomplete;
             P2List_Combo.AutoCompleteCustomSource = Autocomplete;
@@ -1162,14 +1161,14 @@ namespace Pokemon_weakness
 
         private void PokemonList_combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Type1_Combo.SelectedIndex = PokemonList.GetPokemonType1(PokemonList_combo.SelectedIndex);
-            Type2_Combo.SelectedIndex = PokemonList.GetPokemonType2(PokemonList_combo.SelectedIndex);
+            Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
+            Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
         }
 
         private void P2List_Combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P2Type1_Combo.SelectedIndex = PokemonList.GetPokemonType1(P2List_Combo.SelectedIndex);
-            P2Type2_Combo.SelectedIndex = PokemonList.GetPokemonType2(P2List_Combo.SelectedIndex);
+            P2Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
+            P2Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
         }
 
         private void P2Type1_Combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1237,14 +1236,14 @@ namespace Pokemon_weakness
 
         private void P3List_combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P3Type1_Combo.SelectedIndex = PokemonList.GetPokemonType1(P3List_Combo.SelectedIndex);
-            P3Type2_Combo.SelectedIndex = PokemonList.GetPokemonType2(P3List_Combo.SelectedIndex);
+            P3Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
+            P3Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
         }
 
         private void P4List_Combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P4Type1_Combo.SelectedIndex = PokemonList.GetPokemonType1(P4List_Combo.SelectedIndex);
-            P4Type2_Combo.SelectedIndex = PokemonList.GetPokemonType2(P4List_Combo.SelectedIndex);
+            P4Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
+            P4Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
         }
 
         private void P4Type1_Combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1278,8 +1277,8 @@ namespace Pokemon_weakness
 
         private void P5List_Combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P5Type1_Combo.SelectedIndex = PokemonList.GetPokemonType1(P5List_Combo.SelectedIndex);
-            P5Type2_Combo.SelectedIndex = PokemonList.GetPokemonType2(P5List_Combo.SelectedIndex);
+            P5Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
+            P5Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
         }
 
         private void P5Type1_Combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1313,8 +1312,8 @@ namespace Pokemon_weakness
 
         private void P6List_Combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P6Type1_Combo.SelectedIndex = PokemonList.GetPokemonType1(P6List_Combo.SelectedIndex);
-            P6Type2_Combo.SelectedIndex = PokemonList.GetPokemonType2(P6List_Combo.SelectedIndex);
+            P6Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
+            P6Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
         }
 
         private void P6Type1_Combo_RightToLeftChanged(object sender, EventArgs e)
@@ -1450,41 +1449,48 @@ namespace Pokemon_weakness
     /// <summary>
     /// Class that holds the list off all known pokemon and their types
     /// </summary>
-    class PokemonCreature
+    class PokemonBase
     {
-        List<int> nationalID;
-        List<string> PokemonName;
-        List<int> Type1;
-        List<int> Type2;
+        int nationalID;
+        string PokemonName;
+        PokeTypeSelection Type1, Type2;
+        string Ability1, Ability2, HiddenAbility;
 
-        public PokemonCreature()
+        public PokemonBase()
         {
-            nationalID = new List<int>();
-            PokemonName = new List<string>();
-            Type1 = new List<int>();
-            Type2 = new List<int>();
+            nationalID = new int();
+            PokemonName = "";
+            Type1 = new PokeTypeSelection();
+            Type2 = new PokeTypeSelection();
+            Ability1 = "";
+            Ability2 = "";
+            HiddenAbility = "";
         }
 
         /// <summary>
-        /// Add a pokemon to the list with his ID and types
+        /// Add a pokemon with the provided parameters
         /// </summary>
         /// <param name="ID"></param>
         /// <param name="Name"></param>
         /// <param name="AddType1"></param>
         /// <param name="AddType2"></param>
-        public void AddPokemon(int ID, string Name, int AddType1, int AddType2)
+        public PokemonBase(int ID, string Name, PokeTypeSelection AddType1, PokeTypeSelection AddType2, string AddAbility1,
+                           string AddAbility2, string AddHiddenAbility)
         {
-            nationalID.Add(ID);
-            PokemonName.Add(Name);
-            Type1.Add(AddType1);
-            Type2.Add(AddType2);
+            nationalID = (ID);
+            PokemonName = (Name);
+            Type1 = AddType1;
+            Type2 = AddType2;
+            Ability1 = AddAbility1;
+            Ability2 = AddAbility2;
+            HiddenAbility = AddHiddenAbility;
         }
 
         /// <summary>
         /// returns the list containing the names
         /// </summary>
         /// <returns>List</returns>
-        public List<string> GetNames()
+        public string GetName()
         {
             return PokemonName;
         }
@@ -1494,24 +1500,23 @@ namespace Pokemon_weakness
         /// </summary>
         /// <param name="PokeName"></param>
         /// <returns></returns>
-        public int GetPokemonID(string PokeName)
+        public int GetPokemonID()
         {
-            int Index = PokemonName.IndexOf(PokeName);
-            return nationalID[Index];
+            return nationalID;
 
         }
 
-        public int GetPokemonType1(int Index)
+        public PokeTypeSelection GetPokemonType1()
         {
-            return Type1[Index];
+            return Type1;
         }
 
-        public int GetPokemonType2(int Index)
+        public PokeTypeSelection GetPokemonType2()
         {
-            if (Type2[Index] == -1)
+            if (Type2 == PokeTypeSelection.None)
                 return 0;
             else
-                return Type2[Index] + 1;
+                return (PokeTypeSelection)((int)Type2 + 1);
         }
 
     }

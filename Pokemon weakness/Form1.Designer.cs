@@ -447,6 +447,7 @@
             // 
             this.WeaknessGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.WeaknessGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.WeaknessGrid.Enabled = false;
             this.WeaknessGrid.Location = new System.Drawing.Point(8, 121);
             this.WeaknessGrid.Name = "WeaknessGrid";
             this.WeaknessGrid.Size = new System.Drawing.Size(651, 434);
