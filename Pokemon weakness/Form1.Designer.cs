@@ -28,10 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.PokemonWeakness_pnl = new System.Windows.Forms.Panel();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.P6_Ability_Combo = new System.Windows.Forms.ComboBox();
+            this.P1_Ability_Combo = new System.Windows.Forms.ComboBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.P5_Ability_Combo = new System.Windows.Forms.ComboBox();
+            this.P2_Ability_Combo = new System.Windows.Forms.ComboBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.P4_Ability_Combo = new System.Windows.Forms.ComboBox();
+            this.P3_Ability_Combo = new System.Windows.Forms.ComboBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.label14 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -92,6 +104,7 @@
             this.Water_check = new System.Windows.Forms.CheckBox();
             this.Normal_check = new System.Windows.Forms.CheckBox();
             this.MoveStrenght_grid = new System.Windows.Forms.DataGridView();
+            this.Prnt_button = new System.Windows.Forms.Button();
             this.PokemonWeakness_pnl.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.WeaknessGrid)).BeginInit();
@@ -101,6 +114,19 @@
             // 
             // PokemonWeakness_pnl
             // 
+            this.PokemonWeakness_pnl.BackColor = System.Drawing.SystemColors.Control;
+            this.PokemonWeakness_pnl.Controls.Add(this.label17);
+            this.PokemonWeakness_pnl.Controls.Add(this.label18);
+            this.PokemonWeakness_pnl.Controls.Add(this.P6_Ability_Combo);
+            this.PokemonWeakness_pnl.Controls.Add(this.P1_Ability_Combo);
+            this.PokemonWeakness_pnl.Controls.Add(this.label19);
+            this.PokemonWeakness_pnl.Controls.Add(this.P5_Ability_Combo);
+            this.PokemonWeakness_pnl.Controls.Add(this.P2_Ability_Combo);
+            this.PokemonWeakness_pnl.Controls.Add(this.label20);
+            this.PokemonWeakness_pnl.Controls.Add(this.label21);
+            this.PokemonWeakness_pnl.Controls.Add(this.P4_Ability_Combo);
+            this.PokemonWeakness_pnl.Controls.Add(this.P3_Ability_Combo);
+            this.PokemonWeakness_pnl.Controls.Add(this.label22);
             this.PokemonWeakness_pnl.Controls.Add(this.chart1);
             this.PokemonWeakness_pnl.Controls.Add(this.label14);
             this.PokemonWeakness_pnl.Controls.Add(this.label1);
@@ -141,24 +167,144 @@
             this.PokemonWeakness_pnl.Controls.Add(this.label5);
             this.PokemonWeakness_pnl.Location = new System.Drawing.Point(5, 30);
             this.PokemonWeakness_pnl.Name = "PokemonWeakness_pnl";
-            this.PokemonWeakness_pnl.Size = new System.Drawing.Size(986, 555);
+            this.PokemonWeakness_pnl.Size = new System.Drawing.Size(1247, 639);
             this.PokemonWeakness_pnl.TabIndex = 55;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(657, 101);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(34, 13);
+            this.label17.TabIndex = 104;
+            this.label17.Text = "Ability";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(11, 101);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(34, 13);
+            this.label18.TabIndex = 94;
+            this.label18.Text = "Ability";
+            // 
+            // P6_Ability_Combo
+            // 
+            this.P6_Ability_Combo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.P6_Ability_Combo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.P6_Ability_Combo.FormattingEnabled = true;
+            this.P6_Ability_Combo.Location = new System.Drawing.Point(653, 121);
+            this.P6_Ability_Combo.Name = "P6_Ability_Combo";
+            this.P6_Ability_Combo.Size = new System.Drawing.Size(121, 21);
+            this.P6_Ability_Combo.TabIndex = 103;
+            this.P6_Ability_Combo.SelectedIndexChanged += new System.EventHandler(this.Ability_Combo_SelectedIndexChanged);
+            // 
+            // P1_Ability_Combo
+            // 
+            this.P1_Ability_Combo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.P1_Ability_Combo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.P1_Ability_Combo.FormattingEnabled = true;
+            this.P1_Ability_Combo.Location = new System.Drawing.Point(7, 121);
+            this.P1_Ability_Combo.Name = "P1_Ability_Combo";
+            this.P1_Ability_Combo.Size = new System.Drawing.Size(121, 21);
+            this.P1_Ability_Combo.TabIndex = 93;
+            this.P1_Ability_Combo.SelectedIndexChanged += new System.EventHandler(this.Ability_Combo_SelectedIndexChanged);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(527, 101);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(34, 13);
+            this.label19.TabIndex = 102;
+            this.label19.Text = "Ability";
+            // 
+            // P5_Ability_Combo
+            // 
+            this.P5_Ability_Combo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.P5_Ability_Combo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.P5_Ability_Combo.FormattingEnabled = true;
+            this.P5_Ability_Combo.Location = new System.Drawing.Point(523, 121);
+            this.P5_Ability_Combo.Name = "P5_Ability_Combo";
+            this.P5_Ability_Combo.Size = new System.Drawing.Size(121, 21);
+            this.P5_Ability_Combo.TabIndex = 101;
+            this.P5_Ability_Combo.SelectedIndexChanged += new System.EventHandler(this.Ability_Combo_SelectedIndexChanged);
+            // 
+            // P2_Ability_Combo
+            // 
+            this.P2_Ability_Combo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.P2_Ability_Combo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.P2_Ability_Combo.FormattingEnabled = true;
+            this.P2_Ability_Combo.Location = new System.Drawing.Point(136, 121);
+            this.P2_Ability_Combo.Name = "P2_Ability_Combo";
+            this.P2_Ability_Combo.Size = new System.Drawing.Size(121, 21);
+            this.P2_Ability_Combo.TabIndex = 95;
+            this.P2_Ability_Combo.SelectedIndexChanged += new System.EventHandler(this.Ability_Combo_SelectedIndexChanged);
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(399, 101);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(34, 13);
+            this.label20.TabIndex = 100;
+            this.label20.Text = "Ability";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(140, 101);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(34, 13);
+            this.label21.TabIndex = 96;
+            this.label21.Text = "Ability";
+            // 
+            // P4_Ability_Combo
+            // 
+            this.P4_Ability_Combo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.P4_Ability_Combo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.P4_Ability_Combo.FormattingEnabled = true;
+            this.P4_Ability_Combo.Location = new System.Drawing.Point(395, 121);
+            this.P4_Ability_Combo.Name = "P4_Ability_Combo";
+            this.P4_Ability_Combo.Size = new System.Drawing.Size(121, 21);
+            this.P4_Ability_Combo.TabIndex = 99;
+            this.P4_Ability_Combo.SelectedIndexChanged += new System.EventHandler(this.Ability_Combo_SelectedIndexChanged);
+            // 
+            // P3_Ability_Combo
+            // 
+            this.P3_Ability_Combo.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.P3_Ability_Combo.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.P3_Ability_Combo.FormattingEnabled = true;
+            this.P3_Ability_Combo.Location = new System.Drawing.Point(266, 121);
+            this.P3_Ability_Combo.Name = "P3_Ability_Combo";
+            this.P3_Ability_Combo.Size = new System.Drawing.Size(121, 21);
+            this.P3_Ability_Combo.TabIndex = 97;
+            this.P3_Ability_Combo.SelectedIndexChanged += new System.EventHandler(this.Ability_Combo_SelectedIndexChanged);
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(270, 101);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(34, 13);
+            this.label22.TabIndex = 98;
+            this.label22.Text = "Ability";
             // 
             // chart1
             // 
             this.chart1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Enabled = false;
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(665, 121);
+            chartArea3.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea3);
+            legend3.Enabled = false;
+            legend3.Name = "Legend1";
+            this.chart1.Legends.Add(legend3);
+            this.chart1.Location = new System.Drawing.Point(676, 192);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(300, 300);
+            series3.ChartArea = "ChartArea1";
+            series3.Legend = "Legend1";
+            series3.Name = "Series1";
+            this.chart1.Series.Add(series3);
+            this.chart1.Size = new System.Drawing.Size(568, 434);
             this.chart1.TabIndex = 92;
             this.chart1.Text = "chart1";
             // 
@@ -448,7 +594,7 @@
             this.WeaknessGrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.WeaknessGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.WeaknessGrid.Enabled = false;
-            this.WeaknessGrid.Location = new System.Drawing.Point(8, 121);
+            this.WeaknessGrid.Location = new System.Drawing.Point(14, 192);
             this.WeaknessGrid.Name = "WeaknessGrid";
             this.WeaknessGrid.Size = new System.Drawing.Size(651, 434);
             this.WeaknessGrid.TabIndex = 61;
@@ -1241,11 +1387,23 @@
             this.MoveStrenght_grid.Size = new System.Drawing.Size(969, 428);
             this.MoveStrenght_grid.TabIndex = 0;
             // 
+            // Prnt_button
+            // 
+            this.Prnt_button.Location = new System.Drawing.Point(1174, 1);
+            this.Prnt_button.Name = "Prnt_button";
+            this.Prnt_button.Size = new System.Drawing.Size(75, 23);
+            this.Prnt_button.TabIndex = 59;
+            this.Prnt_button.Text = "Save Image";
+            this.Prnt_button.UseVisualStyleBackColor = true;
+            this.Prnt_button.Click += new System.EventHandler(this.Prnt_button_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1003, 591);
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.ClientSize = new System.Drawing.Size(1264, 681);
+            this.Controls.Add(this.Prnt_button);
             this.Controls.Add(this.PokemonStrenght_btn);
             this.Controls.Add(this.PokemonWeakness_btn);
             this.Controls.Add(this.PokemonWeakness_pnl);
@@ -1328,6 +1486,19 @@
         private System.Windows.Forms.CheckBox Dragon_check;
         private System.Windows.Forms.CheckBox Rock_check;
         private System.Windows.Forms.CheckBox Bug_check;
+        private System.Windows.Forms.Button Prnt_button;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox P6_Ability_Combo;
+        private System.Windows.Forms.ComboBox P1_Ability_Combo;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ComboBox P5_Ability_Combo;
+        private System.Windows.Forms.ComboBox P2_Ability_Combo;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox P4_Ability_Combo;
+        private System.Windows.Forms.ComboBox P3_Ability_Combo;
+        private System.Windows.Forms.Label label22;
     }
 }
 

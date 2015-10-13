@@ -81,6 +81,9 @@ namespace Pokemon_weakness
         string[] Pokemon5Weak = { "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
         string[] Pokemon6Weak = { "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1" };
 
+        // string array used to incorporate Abilities
+        string[] PokemonAbilities = { "", "", "", "", "", "" };
+
         //List used to populate the comboboxes
         List<PokemonBase> PokemonList = new List<PokemonBase>();
 
@@ -234,13 +237,11 @@ namespace Pokemon_weakness
 
         /// <summary>
         /// Reads all pokemonNames from a file named AllPokemon.txt
-        /// this contains in this order: ID -> Name -> Type1 -> (optional)Type2
+        /// this contains in this order: ID -> Name -> Type1 -> (optional)Type2 -> Ability1 -> (optional)Ability2 -> (optional)HiddenAbility
         /// seperated by a \t. ended by a \n    
         /// </summary>
         private void SetPokemonNamesinClass()
         {
-            // Debug string: @"C:\Users\De Wit Jonas\documents\visual studio 2012\Projects\Pokemon weakness\Pokemon weakness\AllPokemon.txt"
-            //string Filename = @"Pokemons.txt";
             string Filename = @"Pokemons.tsv";
            
             if (File.Exists(Filename))
@@ -379,6 +380,55 @@ namespace Pokemon_weakness
                 string[] Inputstring = { ((PokeTypeSelection)i).ToString(), WeaknessCodeIntoString(Pokemon1Weak[i]), WeaknessCodeIntoString(Pokemon2Weak[i]), 
                                           WeaknessCodeIntoString(Pokemon3Weak[i]), WeaknessCodeIntoString(Pokemon4Weak[i]),
                                           WeaknessCodeIntoString(Pokemon5Weak[i]), WeaknessCodeIntoString(Pokemon6Weak[i]), "Sum" };
+
+                //TODO (jonas) Add in Ability support here
+                // go through each pokemon ability
+                for (int Index = 0; Index < 6; Index++)
+                {
+                    if (PokemonAbilities[Index] == "Dry Skin" && (PokeTypeSelection)i == PokeTypeSelection.Water)
+                        Inputstring[Index + 1] = "0";
+
+                    if ((PokemonAbilities[Index] == "Filter" || PokemonAbilities[Index] == "Solid Rock") && Inputstring[Index + 1] == "2")
+                        Inputstring[Index + 1] = "3/2";
+                    else if ((PokemonAbilities[Index] == "Filter" || PokemonAbilities[Index] == "Solid Rock") && Inputstring[Index + 1] == "4")
+                        Inputstring[Index + 1] = "3";
+
+                    if (PokemonAbilities[Index] == "Flash Fire" && (PokeTypeSelection)i == PokeTypeSelection.Fire)
+                        Inputstring[Index + 1] = "0";
+
+                    if (PokemonAbilities[Index] == "Heatproof" && (PokeTypeSelection)i == PokeTypeSelection.Fire && Inputstring[Index + 1] == "1")
+                        Inputstring[Index + 1] = "1/2";
+                    else if (PokemonAbilities[Index] == "Heatproof" && (PokeTypeSelection)i == PokeTypeSelection.Fire && Inputstring[Index + 1] == "2")
+                        Inputstring[Index + 1] = "1";
+                    else if (PokemonAbilities[Index] == "Heatproof" && (PokeTypeSelection)i == PokeTypeSelection.Fire && Inputstring[Index + 1] == "4")
+                        Inputstring[Index + 1] = "2";
+
+                    if (PokemonAbilities[Index] == "Levitate" && (PokeTypeSelection)i == PokeTypeSelection.Ground)
+                        Inputstring[Index + 1] = "0";
+
+                    if (PokemonAbilities[Index] == "Motor Drive" && (PokeTypeSelection)i == PokeTypeSelection.Electric)
+                        Inputstring[Index + 1] = "0";
+
+                    if (PokemonAbilities[Index] == "Thick Fat" && ((PokeTypeSelection)i == PokeTypeSelection.Fire || (PokeTypeSelection)i == PokeTypeSelection.Ice) &&
+                        Inputstring[Index + 1] == "1")
+                        Inputstring[Index + 1] = "1/2";
+                    else if (PokemonAbilities[Index] == "Thick Fat" && ((PokeTypeSelection)i == PokeTypeSelection.Fire || (PokeTypeSelection)i == PokeTypeSelection.Ice) &&
+                             Inputstring[Index + 1] == "2")
+                        Inputstring[Index + 1] = "1";
+                    else if (PokemonAbilities[Index] == "Thick Fat" && ((PokeTypeSelection)i == PokeTypeSelection.Fire || (PokeTypeSelection)i == PokeTypeSelection.Ice ) && 
+                             Inputstring[Index + 1] == "4")
+                        Inputstring[Index + 1] = "2";
+
+                    if (PokemonAbilities[Index] == "Volt Absorb" && (PokeTypeSelection)i == PokeTypeSelection.Electric)
+                        Inputstring[Index + 1] = "0";
+
+                    if (PokemonAbilities[Index] == "Water Absorb" && (PokeTypeSelection)i == PokeTypeSelection.Water)
+                        Inputstring[Index + 1] = "0";
+
+                    if (PokemonAbilities[Index] == "Wonder Guard" && (Inputstring[Index + 1] == "1" || Inputstring[Index + 1] == "1/2" || Inputstring[Index + 1] == "1/4"))
+                        Inputstring[Index + 1] = "0";
+                }
+
                 WeaknessGrid.Rows.Add(Inputstring);
                 WeaknessCount = 0;
                 StrenghtCount = 0;
@@ -404,12 +454,14 @@ namespace Pokemon_weakness
                                 //WeaknessGrid.Rows[i].Cells[j].Style.ForeColor = Color.White;
                                 StrenghtCount++;
                             }break;
+                        case "3/2":
                         case "2":
                             {
                                 WeaknessGrid.Rows[i].Cells[j].Style.BackColor = Color.OrangeRed;
                                 WeaknessGrid.Rows[i].Cells[j].Style.ForeColor = Color.White;
                                 WeaknessCount++;
                             }break;
+                        case "3":
                         case "4":
                             {
                                 WeaknessGrid.Rows[i].Cells[j].Style.BackColor = Color.Red;
@@ -421,6 +473,7 @@ namespace Pokemon_weakness
 
                     }// end switch
                 }// end for loop (row)
+
                 WeaknessGrid.Rows[i].Cells[7].Value = (StrenghtCount - WeaknessCount).ToString();
 
                 if ((StrenghtCount - WeaknessCount ) > 0)
@@ -446,36 +499,61 @@ namespace Pokemon_weakness
         }
 
         /// <summary>
-        /// Check Row and counter for strenght and weakness
+        /// Check Rows and counters for strenght and weakness and sets the colors
         /// </summary>
-        /// <param name="Row"></param>
-        /// <param name="Counter"></param>
         /// <param name="TypeWeakness"></param>
-        /// <param name="TypeStrenght"></param>
+        /// <param name="TypeStrength"></param>
+        /// <param name="TypeImmunity"></param>
         /// <returns></returns>
-        private int CheckPokemontype(int Row, int Counter, int[] TypeWeakness, int[] TypeStrenght)
+        private void CheckPokemontype( int[] TypeWeakness, int[] TypeStrenght, int[]TypeImmunity)
         {
             bool Weak = false, Strong = false;
+            int result = 0;
 
-            foreach (int Type in TypeWeakness)
+            for (int Row = 0; Row < 18; Row++)
             {
-                if (Type == Counter || Type == Row)
-                    Weak = true;
+                foreach (int Type in TypeImmunity)
+                {
+                    if (MoveStrenght_grid.Rows[Type].Cells[Row + 1].Style.BackColor != Color.Green)
+                    {
+                        MoveStrenght_grid.Rows[Type].Cells[Row + 1].Style.BackColor = Color.Red;
+                        MoveStrenght_grid.Rows[Row].Cells[Type + 1].Style.BackColor = Color.Red;
+                    }
+                }
+
+                for (int Column = 0; Column < 18; Column++)
+                {
+                    Weak = false;
+                    Strong = false;
+                    result = 0;
+
+                    foreach (int Type in TypeWeakness)
+                    {
+                        if (Type == Column || Type == Row)
+                            Weak = true;
+                    }
+
+                    foreach (int Type in TypeStrenght)
+                    {
+                        if (Type == Column || Type == Row)
+                            Strong = true;
+                    }
+
+                    if (Weak == true && Strong == false)
+                        result = 1;
+                    else if (Weak == false && Strong == true)
+                        result = 2;
+
+                    if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
+                    {
+                        if (result == 1)
+                            MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
+                        else if (result == 2)
+                            MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
+                    }
+                }
+
             }
-
-            foreach (int Type in TypeStrenght)
-            {
-                if (Type == Counter || Type == Row)
-                    Strong = true;                    
-            }
-
-            if (Weak == true && Strong == false)
-                return 1;
-            else if (Weak == false && Strong == true)
-                return 2;
-
-
-            return 0;
         }
 
         /// <summary>
@@ -490,26 +568,11 @@ namespace Pokemon_weakness
             //normalcheck
             if (Normal_check.Checked == true)
             {
-                for (int i = 0; i < 18; i++)
-                {
-                    // Ghostweakness for normal
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Ghost].Cells[i + 1].Style.BackColor != Color.Green)
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Ghost].Cells[i + 1].Style.BackColor = Color.Red;
-                    if (MoveStrenght_grid.Rows[i].Cells[(int)PokeTypeSelection.Ghost + 1].Style.BackColor != Color.Green)
-                        MoveStrenght_grid.Rows[i].Cells[(int)PokeTypeSelection.Ghost + 1].Style.BackColor = Color.Red;
+                int[] Strength = { };
+                int[] Weakness = { (int)PokeTypeSelection.Rock, (int)PokeTypeSelection.Steel, (int)PokeTypeSelection.Ghost };
+                int[] Immunity = { (int)PokeTypeSelection.Ghost };
 
-                    // Rockweakness for normal
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Rock].Cells[i + 1].Style.BackColor != Color.Green)
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Rock].Cells[i + 1].Style.BackColor = Color.Red;
-                    if (MoveStrenght_grid.Rows[i].Cells[(int)PokeTypeSelection.Rock + 1].Style.BackColor != Color.Green)
-                        MoveStrenght_grid.Rows[i].Cells[(int)PokeTypeSelection.Rock + 1].Style.BackColor = Color.Red;
-
-                    // Steelweakness for normal
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Steel].Cells[i + 1].Style.BackColor != Color.Green)
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Steel].Cells[i + 1].Style.BackColor = Color.Red;
-                    if (MoveStrenght_grid.Rows[i].Cells[(int)PokeTypeSelection.Steel + 1].Style.BackColor != Color.Green)
-                        MoveStrenght_grid.Rows[i].Cells[(int)PokeTypeSelection.Steel + 1].Style.BackColor = Color.Red;
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             } // end normal check
             
             //firecheck
@@ -517,23 +580,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Ice, (int)PokeTypeSelection.Bug, (int)PokeTypeSelection.Steel };
                 int[] Weakness = { (int)PokeTypeSelection.Fire, (int)PokeTypeSelection.Rock, (int)PokeTypeSelection.Water, (int)PokeTypeSelection.Dragon };
-                int result = 0;
+                int[] Immunity = { }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             } // end Fire check
 
             //watercheck
@@ -541,23 +590,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Fire, (int)PokeTypeSelection.Ground, (int)PokeTypeSelection.Rock };
                 int[] Weakness = { (int)PokeTypeSelection.Water, (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Dragon };
-                int result = 0;
+                int[] Immunity = { };
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             } // end Water Check
 
             //electriccheck
@@ -565,31 +600,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Water, (int)PokeTypeSelection.Flying, (int)PokeTypeSelection.Rock };
                 int[] Weakness = { (int)PokeTypeSelection.Ground, (int)PokeTypeSelection.Electric, (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Dragon };
-                int result = 0;
+                int[] Immunity = { (int)PokeTypeSelection.Ground }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    // Ground Immunity from Electric
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Ground].Cells[Row + 1].Style.BackColor != Color.Green)
-                    {
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Ground].Cells[Row + 1].Style.BackColor = Color.Red;
-                        MoveStrenght_grid.Rows[Row].Cells[(int)PokeTypeSelection.Ground + 1].Style.BackColor = Color.Red;
-                    }
-
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                   
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Electric check
 
             //grasscheck
@@ -598,23 +611,9 @@ namespace Pokemon_weakness
                 int[] Strength = { (int)PokeTypeSelection.Water, (int)PokeTypeSelection.Ground, (int)PokeTypeSelection.Rock };
                 int[] Weakness = { (int)PokeTypeSelection.Fire, (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Poison, (int)PokeTypeSelection.Flying,
                                    (int)PokeTypeSelection.Bug, (int)PokeTypeSelection.Dragon, (int)PokeTypeSelection.Steel };
-                int result = 0;
+                int[] Immunity = { }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Grass check
 
             //icecheck
@@ -622,23 +621,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Ground, (int)PokeTypeSelection.Flying, (int)PokeTypeSelection.Dragon };
                 int[] Weakness = { (int)PokeTypeSelection.Fire, (int)PokeTypeSelection.Water, (int)PokeTypeSelection.Ice, (int)PokeTypeSelection.Steel };
-                int result = 0;
+                int[] Immunity = { }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Ice check
 
             //fightingcheck
@@ -648,30 +633,9 @@ namespace Pokemon_weakness
                                    (int)PokeTypeSelection.Steel};
                 int[] Weakness = { (int)PokeTypeSelection.Ghost, (int)PokeTypeSelection.Poison, (int)PokeTypeSelection.Flying, (int)PokeTypeSelection.Psychic,
                                    (int)PokeTypeSelection.Bug, (int)PokeTypeSelection.Fairy};
-                int result = 0;
+                int[] Immunity = { (int)PokeTypeSelection.Ghost }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                        //Ghost Immunity from Fighting
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Ghost].Cells[Row + 1].Style.BackColor != Color.Green)
-                    {
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Ghost].Cells[Row + 1].Style.BackColor = Color.Red;
-                        MoveStrenght_grid.Rows[Row].Cells[(int)PokeTypeSelection.Ghost + 1].Style.BackColor = Color.Red;
-                    }
-
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Fighting check
         
             //Poisoncheck
@@ -680,30 +644,9 @@ namespace Pokemon_weakness
                 int[] Strength = { (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Fairy };
                 int[] Weakness = { (int)PokeTypeSelection.Steel, (int)PokeTypeSelection.Poison, (int)PokeTypeSelection.Ground, (int)PokeTypeSelection.Rock,
                                    (int)PokeTypeSelection.Ghost };
-                int result = 0;
+                int[] Immunity = { (int)PokeTypeSelection.Steel }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    //Steel Immunity from Poison
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Steel].Cells[Row + 1].Style.BackColor != Color.Green)
-                    {
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Steel].Cells[Row + 1].Style.BackColor = Color.Red;
-                        MoveStrenght_grid.Rows[Row].Cells[(int)PokeTypeSelection.Steel + 1].Style.BackColor = Color.Red;
-                    }
-
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Poison check
 
             //Groundcheck
@@ -712,30 +655,9 @@ namespace Pokemon_weakness
                 int[] Strength = { (int)PokeTypeSelection.Fire, (int)PokeTypeSelection.Electric, (int)PokeTypeSelection.Poison, (int)PokeTypeSelection.Rock,
                                    (int)PokeTypeSelection.Steel };
                 int[] Weakness = { (int)PokeTypeSelection.Flying, (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Bug };
-                int result = 0;
+                int[] Immunity = { (int)PokeTypeSelection.Flying }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    //Flying Immunity from Ground
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Flying].Cells[Row + 1].Style.BackColor != Color.Green)
-                    {
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Flying].Cells[Row + 1].Style.BackColor = Color.Red;
-                        MoveStrenght_grid.Rows[Row].Cells[(int)PokeTypeSelection.Flying + 1].Style.BackColor = Color.Red;
-                    }
-
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Ground check
 
             //Flyingcheck
@@ -743,23 +665,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Fighting, (int)PokeTypeSelection.Bug };
                 int[] Weakness = { (int)PokeTypeSelection.Electric, (int)PokeTypeSelection.Rock, (int)PokeTypeSelection.Steel };
-                int result = 0;
+                int[] Immunity = { };
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Flying check
 
             //Psychiccheck
@@ -767,30 +675,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Fighting, (int)PokeTypeSelection.Poison };
                 int[] Weakness = { (int)PokeTypeSelection.Dark, (int)PokeTypeSelection.Psychic, (int)PokeTypeSelection.Steel };
-                int result = 0;
+                int[] Immunity = { (int)PokeTypeSelection.Dark };
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    //Dark Immunity from Psychic
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Psychic].Cells[Row + 1].Style.BackColor != Color.Green)
-                    {
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Psychic].Cells[Row + 1].Style.BackColor = Color.Red;
-                        MoveStrenght_grid.Rows[Row].Cells[(int)PokeTypeSelection.Psychic + 1].Style.BackColor = Color.Red;
-                    }
-
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Psychic check
 
             //Bugcheck
@@ -799,23 +686,9 @@ namespace Pokemon_weakness
                 int[] Strength = { (int)PokeTypeSelection.Grass, (int)PokeTypeSelection.Psychic, (int)PokeTypeSelection.Dark };
                 int[] Weakness = { (int)PokeTypeSelection.Fire, (int)PokeTypeSelection.Fighting, (int)PokeTypeSelection.Poison, (int)PokeTypeSelection.Flying,
                                    (int)PokeTypeSelection.Ghost, (int)PokeTypeSelection.Steel, (int)PokeTypeSelection.Fairy };
-                int result = 0;
+                int[] Immunity = { }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Bug check
 
             //Rockcheck
@@ -823,23 +696,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Fire, (int)PokeTypeSelection.Ice, (int)PokeTypeSelection.Flying, (int)PokeTypeSelection.Bug };
                 int[] Weakness = { (int)PokeTypeSelection.Fighting, (int)PokeTypeSelection.Ground, (int)PokeTypeSelection.Steel };
-                int result = 0;
+                int[] Immunity = { };
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Rock check
 
             //Ghostcheck
@@ -847,30 +706,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Psychic, (int)PokeTypeSelection.Ghost };
                 int[] Weakness = { (int)PokeTypeSelection.Dark, (int)PokeTypeSelection.Normal };
-                int result = 0;
+                int[] Immunity = { (int)PokeTypeSelection.Normal }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    //Normal Immunity from Ghost
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Normal].Cells[Row + 1].Style.BackColor != Color.Green)
-                    {
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Normal].Cells[Row + 1].Style.BackColor = Color.Red;
-                        MoveStrenght_grid.Rows[Row].Cells[(int)PokeTypeSelection.Normal + 1].Style.BackColor = Color.Red;
-                    }
-
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Ghost check
 
             //Dragoncheck
@@ -878,30 +716,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Dragon };
                 int[] Weakness = { (int)PokeTypeSelection.Steel, (int)PokeTypeSelection.Fairy };
-                int result = 0;
+                int[] Immunity = { (int)PokeTypeSelection.Fairy }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    //Fairy Immunity from Dragon
-                    if (MoveStrenght_grid.Rows[(int)PokeTypeSelection.Fairy].Cells[Row + 1].Style.BackColor != Color.Green)
-                    {
-                        MoveStrenght_grid.Rows[(int)PokeTypeSelection.Fairy].Cells[Row + 1].Style.BackColor = Color.Red;
-                        MoveStrenght_grid.Rows[Row].Cells[(int)PokeTypeSelection.Fairy + 1].Style.BackColor = Color.Red;
-                    }
-
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Dragon check
 
             //Darkcheck
@@ -909,23 +726,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Psychic, (int)PokeTypeSelection.Ghost };
                 int[] Weakness = { (int)PokeTypeSelection.Fighting, (int)PokeTypeSelection.Dark, (int)PokeTypeSelection.Fairy };
-                int result = 0;
+                int[] Immunity = { }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Dark check
 
             //Steelcheck
@@ -933,23 +736,10 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Ice, (int)PokeTypeSelection.Rock, (int)PokeTypeSelection.Fairy };
                 int[] Weakness = { (int)PokeTypeSelection.Fire, (int)PokeTypeSelection.Water, (int)PokeTypeSelection.Electric, (int)PokeTypeSelection.Steel };
-                int result = 0;
+                int[] Immunity = { }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
+                
             }// end Steel check
 
             //Fairycheck
@@ -957,23 +747,9 @@ namespace Pokemon_weakness
             {
                 int[] Strength = { (int)PokeTypeSelection.Dragon, (int)PokeTypeSelection.Fighting, (int)PokeTypeSelection.Dark };
                 int[] Weakness = { (int)PokeTypeSelection.Steel, (int)PokeTypeSelection.Poison, (int)PokeTypeSelection.Fire };
-                int result = 0;
+                int[] Immunity = { }; 
 
-                for (int Row = 0; Row < 18; Row++)
-                {
-                    for (int Column = 0; Column < 18; Column++)
-                    {
-                        result = CheckPokemontype(Row, Column, Weakness, Strength);
-
-                        if (MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor != Color.Green)
-                        {
-                            if (result == 1)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Red;
-                            else if (result == 2)
-                                MoveStrenght_grid.Rows[Row].Cells[Column + 1].Style.BackColor = Color.Green;
-                        }
-                    }
-                }
+                CheckPokemontype(Weakness, Strength, Immunity);
             }// end Fairy check
         }
 
@@ -1163,12 +939,18 @@ namespace Pokemon_weakness
         {
             Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
             Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
+            P1_Ability_Combo.Items.Clear();
+            P1_Ability_Combo.Items.AddRange(PokemonList[PokemonList_combo.SelectedIndex].GetAbilities().ToArray());
+            P1_Ability_Combo.SelectedIndex = 0;
         }
 
         private void P2List_Combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P2Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
-            P2Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
+            P2Type1_Combo.SelectedIndex = (int)PokemonList[P2List_Combo.SelectedIndex].GetPokemonType1();
+            P2Type2_Combo.SelectedIndex = (int)PokemonList[P2List_Combo.SelectedIndex].GetPokemonType2();
+            P2_Ability_Combo.Items.Clear();
+            P2_Ability_Combo.Items.AddRange(PokemonList[P2List_Combo.SelectedIndex].GetAbilities().ToArray());
+            P2_Ability_Combo.SelectedIndex = 0;
         }
 
         private void P2Type1_Combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1236,14 +1018,20 @@ namespace Pokemon_weakness
 
         private void P3List_combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P3Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
-            P3Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
+            P3Type1_Combo.SelectedIndex = (int)PokemonList[P3List_Combo.SelectedIndex].GetPokemonType1();
+            P3Type2_Combo.SelectedIndex = (int)PokemonList[P3List_Combo.SelectedIndex].GetPokemonType2();
+            P3_Ability_Combo.Items.Clear();
+            P3_Ability_Combo.Items.AddRange(PokemonList[P3List_Combo.SelectedIndex].GetAbilities().ToArray());
+            P3_Ability_Combo.SelectedIndex = 0;
         }
 
         private void P4List_Combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P4Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
-            P4Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
+            P4Type1_Combo.SelectedIndex = (int)PokemonList[P4List_Combo.SelectedIndex].GetPokemonType1();
+            P4Type2_Combo.SelectedIndex = (int)PokemonList[P4List_Combo.SelectedIndex].GetPokemonType2();
+            P4_Ability_Combo.Items.Clear();
+            P4_Ability_Combo.Items.AddRange(PokemonList[P4List_Combo.SelectedIndex].GetAbilities().ToArray());
+            P4_Ability_Combo.SelectedIndex = 0;
         }
 
         private void P4Type1_Combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1277,8 +1065,11 @@ namespace Pokemon_weakness
 
         private void P5List_Combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P5Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
-            P5Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
+            P5Type1_Combo.SelectedIndex = (int)PokemonList[P5List_Combo.SelectedIndex].GetPokemonType1();
+            P5Type2_Combo.SelectedIndex = (int)PokemonList[P5List_Combo.SelectedIndex].GetPokemonType2();
+            P5_Ability_Combo.Items.Clear();
+            P5_Ability_Combo.Items.AddRange(PokemonList[P5List_Combo.SelectedIndex].GetAbilities().ToArray());
+            P5_Ability_Combo.SelectedIndex = 0;
         }
 
         private void P5Type1_Combo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1312,8 +1103,11 @@ namespace Pokemon_weakness
 
         private void P6List_Combo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            P6Type1_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType1();
-            P6Type2_Combo.SelectedIndex = (int)PokemonList[PokemonList_combo.SelectedIndex].GetPokemonType2();
+            P6Type1_Combo.SelectedIndex = (int)PokemonList[P6List_Combo.SelectedIndex].GetPokemonType1();
+            P6Type2_Combo.SelectedIndex = (int)PokemonList[P6List_Combo.SelectedIndex].GetPokemonType2();
+            P6_Ability_Combo.Items.Clear();
+            P6_Ability_Combo.Items.AddRange(PokemonList[P6List_Combo.SelectedIndex].GetAbilities().ToArray());
+            P6_Ability_Combo.SelectedIndex = 0;
         }
 
         private void P6Type1_Combo_RightToLeftChanged(object sender, EventArgs e)
@@ -1391,7 +1185,56 @@ namespace Pokemon_weakness
             UpdateStrengthGridView();
         }
 
-       
+        private void Prnt_button_Click(object sender, EventArgs e)
+        {
+            int width;
+            int height;
+            Bitmap bm;
+            string Savename = "";
+
+            if (PokemonStrenght_btn.Enabled == true)
+            {
+                width = PokemonWeakness_pnl.Size.Width;
+                height = PokemonWeakness_pnl.Size.Height;
+                PokemonWeakness_pnl.BackColor = Color.White;
+                bm = new Bitmap(width, height);
+                PokemonWeakness_pnl.DrawToBitmap(bm, new Rectangle(0, 0, width, height));
+                PokemonWeakness_pnl.BackColor = DefaultBackColor;
+                Savename = "Weakness" + DateTime.Now.ToString("yyyyMMdd_HHmmss"); ;
+            }
+            else
+            {
+                width = PokemonStrenght_pnl.Size.Width;
+                height = PokemonStrenght_pnl.Size.Height;
+                PokemonStrenght_pnl.BackColor = Color.White;
+                bm = new Bitmap(width, height);
+                PokemonStrenght_pnl.DrawToBitmap(bm, new Rectangle(0, 0, width, height));
+                PokemonStrenght_pnl.BackColor = DefaultBackColor;
+                Savename = "Strength" + DateTime.Now.ToString("yyyyMMdd_HHmmss");
+            }          
+
+            bm.Save(Savename + ".png",System.Drawing.Imaging.ImageFormat.Png);
+            MessageBox.Show("Saved Image");
+        }
+
+        private void Ability_Combo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if(P1_Ability_Combo.SelectedIndex != -1)
+                PokemonAbilities[0] = P1_Ability_Combo.SelectedItem.ToString();
+            if (P2_Ability_Combo.SelectedIndex != -1)
+                PokemonAbilities[1] = P2_Ability_Combo.SelectedItem.ToString();
+            if (P3_Ability_Combo.SelectedIndex != -1)
+                PokemonAbilities[2] = P3_Ability_Combo.SelectedItem.ToString();
+            if (P4_Ability_Combo.SelectedIndex != -1)
+                PokemonAbilities[3] = P4_Ability_Combo.SelectedItem.ToString();
+            if (P5_Ability_Combo.SelectedIndex != -1)
+                PokemonAbilities[4] = P5_Ability_Combo.SelectedItem.ToString();
+            if (P6_Ability_Combo.SelectedIndex != -1)
+                PokemonAbilities[5] = P6_Ability_Combo.SelectedItem.ToString();
+
+
+            UpdateWeaknessGridView();
+        }
 
     }
 
@@ -1474,6 +1317,9 @@ namespace Pokemon_weakness
         /// <param name="Name"></param>
         /// <param name="AddType1"></param>
         /// <param name="AddType2"></param>
+        /// <param name="AddAbility1"></param>
+        /// <param name="AddAbility2"></param>
+        /// <param name="AddHiddenAbility"></param>
         public PokemonBase(int ID, string Name, PokeTypeSelection AddType1, PokeTypeSelection AddType2, string AddAbility1,
                            string AddAbility2, string AddHiddenAbility)
         {
@@ -1503,7 +1349,6 @@ namespace Pokemon_weakness
         public int GetPokemonID()
         {
             return nationalID;
-
         }
 
         public PokeTypeSelection GetPokemonType1()
@@ -1517,6 +1362,12 @@ namespace Pokemon_weakness
                 return 0;
             else
                 return (PokeTypeSelection)((int)Type2 + 1);
+        }
+
+        public string[] GetAbilities()
+        {
+            string[] returnstring = { Ability1, Ability2, HiddenAbility };
+            return returnstring;
         }
 
     }
